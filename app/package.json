@@ -10,6 +10,10 @@
     "postinstall": "nuxt prepare"
   },
   "dependencies": {
+    "@vueuse/core": "^10.11.0",
+    "@vueuse/firebase": "^10.11.0",
+    "@vueuse/nuxt": "^10.11.0",
+    "firebase": "^10.12.3",
     "nuxt": "^3.12.3",
     "vue": "latest"
   }
