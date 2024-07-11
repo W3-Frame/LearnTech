@@ -4,17 +4,20 @@
   "type": "module",
   "scripts": {
     "build": "nuxt build",
-    "dev": "nuxt dev",
+    "dev": "nuxt dev --host",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare"
   },
   "dependencies": {
+    "@nuxt/ui": "^2.17.0",
     "@vueuse/core": "^10.11.0",
     "@vueuse/firebase": "^10.11.0",
     "@vueuse/nuxt": "^10.11.0",
     "firebase": "^10.12.3",
+    "iconify": "^1.4.0",
     "nuxt": "^3.12.3",
-    "vue": "latest"
+    "vue": "latest",
+    "vue-router": "^4.4.0"
   }
 }
