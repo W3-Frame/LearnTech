@@ -3,17 +3,22 @@ import type { FormError, FormSubmitEvent } from "#ui/types";
 import { useAuth } from "@vueuse/firebase";
 import { getAdditionalUserInfo, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { doc, setDoc } from "firebase/firestore";
+
+// Set page metadata
 definePageMeta({
   layout: "auth",
 });
 
+// Set SEO metadata
 useSeoMeta({
   title: "Mardiya",
 });
 
+// Import Firebase authentication and Firestore database
 const { auth, db } = useFirebase();
 const { isAuthenticated, user } = useAuth(auth);
 
+// Watch for authentication state changes
 watch(isAuthenticated, (isAuthenticated) => {
   if (isAuthenticated) {
     console.log("You're authenticated");
@@ -21,19 +26,21 @@ watch(isAuthenticated, (isAuthenticated) => {
   }
 });
 
+// Function to handle sign-in with Google
 const signIn = () => {
   signInWithPopup(auth, new GoogleAuthProvider()).then(async (result) => {
     const isNewUser = getAdditionalUserInfo(result)?.isNewUser;
-    const {email,displayName,uid}= result.user;
+    const { email, displayName, uid } = result.user;
 
-    if (isNewUser){
-      await setDoc(doc(db, "users", uid),{email,displayName});
+    // If the user is new, save their details to Firestore
+    if (isNewUser) {
+      await setDoc(doc(db, "users", uid), { email, displayName });
     }
     navigateTo("/");
-
   });
 };
 
+// Form fields configuration
 const fields = [
   {
     name: "email",
@@ -48,20 +55,22 @@ const fields = [
     placeholder: "Enter your password",
   },
 ];
+
+// Reactive state for form fields
 const state = reactive({
   email: undefined,
   password: undefined,
 });
 
+// Function to validate form fields
 const validate = (state: any) => {
   const errors = [];
-  if (!state.email)
-    errors.push({ path: "email", message: "Email is required" });
-  if (!state.password)
-    errors.push({ path: "password", message: "Password is required" });
+  if (!state.email) errors.push({ path: "email", message: "Email is required" });
+  if (!state.password) errors.push({ path: "password", message: "Password is required" });
   return errors;
 };
 
+// Social login providers configuration
 const providers = [
   {
     label: "Continue with GitHub",
@@ -73,21 +82,18 @@ const providers = [
   },
 ];
 
+// Function to handle form submission
 function onSubmit(data: any) {
   console.log("Submitted", data);
 }
 </script>
-
 
 <template>
   <UCard class="max-w-sm w-full bg-white/75 dark:bg-white/5 backdrop-blur">
     <!-- Header -->
     <div class="text-center">
       <div class="mb-2 pointer-events-none">
-        <UIcon
-          name="i-heroicons-lock-closed"
-          class="w-8 h-8 flex-shrink-0 text-gray-900 dark:text-white"
-        />
+        <UIcon name="i-heroicons-lock-closed" class="w-8 h-8 flex-shrink-0 text-gray-900 dark:text-white" />
       </div>
       <p class="text-2xl text-gray-900 dark:text-white font-bold">
         Welcome back
@@ -99,70 +105,44 @@ function onSubmit(data: any) {
     </div>
     <!-- Content -->
     <div class="flex flex-col gap-y-6">
-      <UForm
-        :state="state"
-        class="space-y-6"
-        @submit="onSubmit"
-      >
+      <UForm :state="state" class="space-y-6" @submit="onSubmit">
         <UFormGroup label="Email" name="email">
           <UInput v-model="state.email" placeholder="Enter Your Email" />
         </UFormGroup>
 
         <UFormGroup label="Password" name="password" hint="Forget Password ?">
           <template #hint>
-            <NuxtLink to="/" class="text-primary font-medium"
-              >Forgot password?</NuxtLink
-            >
+            <NuxtLink to="/" class="text-primary font-medium">Forgot password?</NuxtLink>
           </template>
-          <UInput
-            v-model="state.password"
-            type="password"
-            placeholder="Enter Your Password"
-          />
+          <UInput v-model="state.password" type="password" placeholder="Enter Your Password" />
         </UFormGroup>
 
-        <UButton
-          type="submit"
-          class="w-full rounded-full text-center flex justify-center gap-x-2"
-        >
+        <UButton type="submit" class="w-full rounded-full text-center flex justify-center gap-x-2">
           <span>Continue</span>
-          <UIcon name="i-heroicons-arrow-right-20-solid" class="flex-shrink-0"
-        /></UButton>
+          <UIcon name="i-heroicons-arrow-right-20-solid" class="flex-shrink-0" />
+        </UButton>
       </UForm>
       <div class="flex items-center align-center text-center w-full flex-row">
-        <div
-          class="flex border-gray-200 dark:border-gray-800 w-full border-t border-solid"
-        ></div>
-        <div
-          class="font-medium text-gray-700 dark:text-gray-200 flex mx-3 whitespace-nowrap"
-        >
+        <div class="flex border-gray-200 dark:border-gray-800 w-full border-t border-solid"></div>
+        <div class="font-medium text-gray-700 dark:text-gray-200 flex mx-3 whitespace-nowrap">
           <span class="text-sm">or</span>
         </div>
-        <div
-          class="flex border-gray-200 dark:border-gray-800 w-full border-t border-solid"
-        ></div>
+        <div class="flex border-gray-200 dark:border-gray-800 w-full border-t border-solid"></div>
       </div>
 
       <div class="space-y-3">
-        <UButton
-          type="submit"
-          color="white"
-          size="lg"
-          class="w-full h-8 rounded-full text-center flex justify-center gap-x-2"
-          @click="signIn()"
-        >
+        <UButton type="submit" color="white" size="lg"
+          class="w-full h-8 rounded-full text-center flex justify-center gap-x-2" @click="signIn">
           <UIcon name="i-simple-icons-google" class="flex-shrink-0 h-5 w-5" />
-          <span>Continue With Google</span></UButton
-        >
+          <span>Continue With Google</span>
+        </UButton>
       </div>
     </div>
 
     <!-- Footer -->
     <p class="text-sm text-gray-500 dark:text-gray-400 mt-6 text-center">
       By signing in, you agree to our
-      <NuxtLink to="/" class="text-primary font-medium"
-        >Terms of Service</NuxtLink
-      >.
+      <NuxtLink to="/" class="text-primary font-medium">Terms of Service</NuxtLink>.
     </p>
   </UCard>
 </template>
