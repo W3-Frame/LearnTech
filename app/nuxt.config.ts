@@ -3,6 +3,16 @@ export default defineNuxtConfig({
   compatibilityDate: "2024-04-03",
   devtools: { enabled: true },
 
+  css: [
+    '@/assets/css/normalize.css',
+    '@/assets/css/main.css',
+    '@/assets/css/bootstrap.min.css',
+    '@/assets/css/all.min.css',
+    '@/assets/css/flaticon.css',
+    '@/assets/css/animate.min.css',
+    '@/assets/css/style.css'
+  ],
+
   runtimeConfig: {
     // Will be available in both client and server
     firebase: {
