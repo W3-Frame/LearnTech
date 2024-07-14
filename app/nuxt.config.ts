@@ -8,9 +8,8 @@ export default defineNuxtConfig({
     '@/assets/css/main.css',
     '@/assets/css/bootstrap.min.css',
     '@/assets/css/all.min.css',
-    '@/assets/css/flaticon.css',
     '@/assets/css/animate.min.css',
-    '@/assets/css/style.css'
+    
   ],
 
   runtimeConfig: {
