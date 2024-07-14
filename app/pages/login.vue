@@ -1,148 +1,65 @@
-<script setup lang="ts">
-import type { FormError, FormSubmitEvent } from "#ui/types";
-import { useAuth } from "@vueuse/firebase";
-import { getAdditionalUserInfo, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
-import { doc, setDoc } from "firebase/firestore";
+<template>
+  <div class="login-page-wrap">
+    <div class="login-page-content">
+      <div class="login-box">
+        <div class="item-logo">
+          <img src="/app/assets/img/logo2.png" alt="logo" />
+        </div>
+        <AuthForm />
+        <GoogleSignInButton />
+      </div>
+    </div>
+  </div>
+</template>
 
-// Set page metadata
-definePageMeta({
-  layout: "auth",
-});
-
-// Set SEO metadata
-useSeoMeta({
-  title: "Mardiya",
-});
-
-// Import Firebase authentication and Firestore database
-const { auth, db } = useFirebase();
-const { isAuthenticated, user } = useAuth(auth);
-
-// Watch for authentication state changes
-watch(isAuthenticated, (isAuthenticated) => {
-  if (isAuthenticated) {
-    console.log("You're authenticated");
-    navigateTo("/");
-  }
-});
-
-// Function to handle sign-in with Google
-const signIn = () => {
-  signInWithPopup(auth, new GoogleAuthProvider()).then(async (result) => {
-    const isNewUser = getAdditionalUserInfo(result)?.isNewUser;
-    const { email, displayName, uid } = result.user;
-
-    // If the user is new, save their details to Firestore
-    if (isNewUser) {
-      await setDoc(doc(db, "users", uid), { email, displayName });
-    }
-    navigateTo("/");
-  });
-};
-
-// Form fields configuration
-const fields = [
-  {
-    name: "email",
-    type: "text",
-    label: "Email",
-    placeholder: "Enter your email",
-  },
-  {
-    name: "password",
-    label: "Password",
-    type: "password",
-    placeholder: "Enter your password",
-  },
-];
-
-// Reactive state for form fields
-const state = reactive({
-  email: undefined,
-  password: undefined,
-});
-
-// Function to validate form fields
-const validate = (state: any) => {
-  const errors = [];
-  if (!state.email) errors.push({ path: "email", message: "Email is required" });
-  if (!state.password) errors.push({ path: "password", message: "Password is required" });
-  return errors;
-};
-
-// Social login providers configuration
-const providers = [
-  {
-    label: "Continue with GitHub",
-    icon: "i-simple-icons-github",
-    color: "white" as const,
-    click: () => {
-      console.log("Redirect to GitHub");
-    },
-  },
-];
-
-// Function to handle form submission
-function onSubmit(data: any) {
-  console.log("Submitted", data);
-}
+<script setup>
+import AuthForm from '~/components/AuthForm.vue';
+import GoogleSignInButton from '~/components/GoogleSignInButton.vue';
 </script>
 
-<template>
-  <UCard class="max-w-sm w-full bg-white/75 dark:bg-white/5 backdrop-blur">
-    <!-- Header -->
-    <div class="text-center">
-      <div class="mb-2 pointer-events-none">
-        <UIcon name="i-heroicons-lock-closed" class="w-8 h-8 flex-shrink-0 text-gray-900 dark:text-white" />
-      </div>
-      <p class="text-2xl text-gray-900 dark:text-white font-bold">
-        Welcome back
-      </p>
-      <p class="text-gray-500 dark:text-gray-400 mt-1">
-        Don't have an account?
-        <a href="/signup" class="text-primary font-medium">Sign up</a>.
-      </p>
-    </div>
-    <!-- Content -->
-    <div class="flex flex-col gap-y-6">
-      <UForm :state="state" class="space-y-6" @submit="onSubmit">
-        <UFormGroup label="Email" name="email">
-          <UInput v-model="state.email" placeholder="Enter Your Email" />
-        </UFormGroup>
+<style scoped>
+.login-page-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background: url('/img/login-bg.jpg') no-repeat center center / cover;
+}
 
-        <UFormGroup label="Password" name="password" hint="Forget Password ?">
-          <template #hint>
-            <NuxtLink to="/" class="text-primary font-medium">Forgot password?</NuxtLink>
-          </template>
-          <UInput v-model="state.password" type="password" placeholder="Enter Your Password" />
-        </UFormGroup>
+.login-box {
+  background: rgba(255, 255, 255, 0.75);
+  padding: 2rem;
+  border-radius: 0.5rem;
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
 
-        <UButton type="submit" class="w-full rounded-full text-center flex justify-center gap-x-2">
-          <span>Continue</span>
-          <UIcon name="i-heroicons-arrow-right-20-solid" class="flex-shrink-0" />
-        </UButton>
-      </UForm>
-      <div class="flex items-center align-center text-center w-full flex-row">
-        <div class="flex border-gray-200 dark:border-gray-800 w-full border-t border-solid"></div>
-        <div class="font-medium text-gray-700 dark:text-gray-200 flex mx-3 whitespace-nowrap">
-          <span class="text-sm">or</span>
-        </div>
-        <div class="flex border-gray-200 dark:border-gray-800 w-full border-t border-solid"></div>
-      </div>
+.item-logo img {
+  max-width: 150px;
+  margin-bottom: 1.5rem;
+}
 
-      <div class="space-y-3">
-        <UButton type="submit" color="white" size="lg"
-          class="w-full h-8 rounded-full text-center flex justify-center gap-x-2" @click="signIn">
-          <UIcon name="i-simple-icons-google" class="flex-shrink-0 h-5 w-5" />
-          <span>Continue With Google</span>
-        </UButton>
-      </div>
-    </div>
+.login-social ul {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  margin: 1.5rem 0;
+}
 
-    <!-- Footer -->
-    <p class="text-sm text-gray-500 dark:text-gray-400 mt-6 text-center">
-      By signing in, you agree to our
-      <NuxtLink to="/" class="text-primary font-medium">Terms of Service</NuxtLink>.
-    </p>
-  </UCard>
-</template>
+.login-social li a {
+  display: block;
+  width: 40px;
+  height: 40px;
+  line-height: 40px;
+  text-align: center;
+  border-radius: 50%;
+  color: #fff;
+}
+
+.bg-fb { background: #3b5998; }
+.bg-twitter { background: #1da1f2; }
+.bg-gplus { background: #dd4b39; }
+.bg-git { background: #333; }
+</style>
