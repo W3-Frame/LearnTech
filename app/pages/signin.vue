@@ -4,7 +4,7 @@
             <!-- Mini formulaire -->
             <div class="login-form">
                 <h2>Connexion</h2>
-                <form @submit.prevent="submitForm">
+                <form >
                     <label for="email">Email</label>
                     <input type="email" id="email" v-model="formData.email" required>
 
