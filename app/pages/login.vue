@@ -3,10 +3,10 @@
     <div class="login-page-content">
       <div class="login-box">
         <div class="item-logo">
-          <img src="/app/assets/img/logo2.png" alt="logo" />
+          <!-- <img src="/app/assets/img/logo2.png" alt="logo" /> -->
         </div>
         <AuthForm />
-        <GoogleSignInButton />
+        <GoogleSignIn />
       </div>
     </div>
   </div>
@@ -14,7 +14,7 @@
 
 <script setup>
 import AuthForm from '~/components/AuthForm.vue';
-import GoogleSignInButton from '~/components/GoogleSignInButton.vue';
+import GoogleSignIn from '~/components/GoogleSignIn.vue';
 </script>
 
 <style scoped>
