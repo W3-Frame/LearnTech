@@ -11,7 +11,7 @@
   import { signInWithPopup, GoogleAuthProvider } from "firebase/auth";
   import { getAdditionalUserInfo } from "firebase/auth";
   import { doc, setDoc } from "firebase/firestore";
-  import { auth, db } from "~/composables/firebase";
+  const { auth, db } = useFirebase();
   
   const signInWithGoogle = () => {
     signInWithPopup(auth, new GoogleAuthProvider()).then(async (result) => {
