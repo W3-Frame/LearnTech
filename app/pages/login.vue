@@ -13,7 +13,7 @@ definePageMeta({
 });
 
 useSeoMeta({
-  title: "Mardiya",
+  title: "Login Page",
 });
 
 const { auth, db } = useFirebase();
