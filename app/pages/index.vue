@@ -12,6 +12,13 @@ import { useAuth } from "@vueuse/firebase";
 import { signOut } from "firebase/auth";
 const { auth, db } = useFirebase();
 const { isAuthenticated, user } = useAuth(auth);
+definePageMeta({
+  layout: "dashboard",
+});
+
+useSeoMeta({
+  title: "Dashboard Page",
+});
 watchEffect(() => {
   console.log(isAuthenticated.value);
 
