@@ -41,6 +41,7 @@ async function onSubmit(event: FormSubmitEvent<any>) {
         placeholder="John Doe"
         autofocus
       />
+      
     </UFormGroup>
 
     <UFormGroup
@@ -53,6 +54,53 @@ async function onSubmit(event: FormSubmitEvent<any>) {
         placeholder="john.doe@example.com"
       />
     </UFormGroup>
+
+    <UFormGroup
+      label="Birth Date"
+      name="Birth Date"
+    >
+      <UInput
+        v-model="state.name"
+        placeholder="30 May 1990"
+        autofocus
+      />
+      
+    </UFormGroup>
+
+    <UFormGroup
+      label="Role"
+      name="Role"
+    >
+      <UInput
+        v-model="state.name"
+        placeholder=¨Professor¨
+        autofocus
+      />
+      
+    </UFormGroup>
+    <UFormGroup
+      label="Phone Number"
+      name="Phone Number"
+    >
+      <UInput
+        v-model="state.name"
+        placeholder=97564534
+        autofocus
+      />
+      
+    </UFormGroup>
+    <UFormGroup
+      label="Photo"
+      name="Photo"
+    >
+      <UInput
+        v-model="state.name"
+        placeholder=97564534
+        autofocus
+      />
+      
+    </UFormGroup>
+
 
     <div class="flex justify-end gap-3">
       <UButton
