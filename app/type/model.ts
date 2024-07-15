@@ -9,6 +9,7 @@ export interface User {
   updatedAt: Date;
   lastLogin: Date;
   phone?: string;
+  photoURL?: string;
 }
 interface useDate {
   createdAt: Date;
@@ -26,7 +27,6 @@ export interface Chapter {
   presentationVideo?: string;
   publishStatus: boolean; // Pour gerer le broullon
 }
-
 
 export interface Course {
   id: number;
