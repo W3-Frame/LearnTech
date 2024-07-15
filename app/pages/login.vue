@@ -98,9 +98,6 @@ const providers = [
   },
 ];
 
-function onSubmit(data: any) {
-  console.log("Submitted", data);
-}
 </script>
 
 <template>
@@ -123,7 +120,7 @@ function onSubmit(data: any) {
     </div>
     <!-- Content -->
     <div class="flex flex-col gap-y-6">
-      <UForm :state="state" class="space-y-6" @submit="onSubmit">
+      <UForm :state="state" class="space-y-6" @submit="emailSinIn()">
         <UFormGroup label="Email" name="email">
           <UInput v-model="state.email" placeholder="Enter Your Email" />
         </UFormGroup>
