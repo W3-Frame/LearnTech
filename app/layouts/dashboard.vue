@@ -9,7 +9,10 @@ useHead({
 <template>
   <div class="h-screen w-screen flex">
     <!-- Side Bar -->
-    <div class="w-[250px] border border-l-4 p-2">Side bar</div>
+    <div class="w-[250px] border border-l-4 p-2">
+      Side bar
+      <Sidebar />
+    </div>
     <!-- Main content [Nav + Content]-->
     <div class="w-full">
       <!-- Nav bar -->
