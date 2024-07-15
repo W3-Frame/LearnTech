@@ -19,14 +19,6 @@ definePageMeta({
 useSeoMeta({
   title: "Dashboard Page",
 });
-watchEffect(() => {
-  console.log(isAuthenticated.value);
-
-  // redirect if not authenticated
-  if (!isAuthenticated.value) {
-    navigateTo("/login");
-  }
-});
 const logout = () => {
   signOut(auth);
 };

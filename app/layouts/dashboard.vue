@@ -1,8 +1,20 @@
 <script setup lang="ts">
+import { useAuth } from "@vueuse/firebase";
+const { auth, db } = useFirebase();
+const { isAuthenticated, user } = useAuth(auth);
 useHead({
   bodyAttrs: {
     class: "dark:bg-gray-950",
   },
+});
+
+watch(isAuthenticated, () => {
+  console.log("is Authenticate status",isAuthenticated.value);
+
+  // redirect if not authenticated
+  if (!isAuthenticated.value) {
+    navigateTo("/login");
+  }
 });
 </script>
 
@@ -17,7 +29,7 @@ useHead({
     <div class="w-full">
       <!-- Nav bar -->
       <div class="flex justify-between border border-b-2 p-2">
-        <p class="self-center">Home</p>
+        <p class="self-center">Dashboard</p>
         <div>
           <UButton
             icon="i-heroicons-bell"
