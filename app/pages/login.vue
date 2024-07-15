@@ -1,7 +1,12 @@
 <script setup lang="ts">
 import type { FormError, FormSubmitEvent } from "#ui/types";
 import { useAuth } from "@vueuse/firebase";
-import { getAdditionalUserInfo, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+import {
+  getAdditionalUserInfo,
+  GoogleAuthProvider,
+  signInWithEmailAndPassword,
+  signInWithPopup,
+} from "firebase/auth";
 import { doc, setDoc } from "firebase/firestore";
 definePageMeta({
   layout: "auth",
@@ -20,20 +25,40 @@ watch(isAuthenticated, (isAuthenticated) => {
     navigateTo("/");
   }
 });
+const emailSinIn = () => {
+  if (state.email && state.password)
+    signInWithEmailAndPassword(auth, state.email, state.password).then(
+      async (result) => {
+        const isNewUser = getAdditionalUserInfo(result)?.isNewUser;
+        const { email, displayName, uid } = result.user;
+
+        if (isNewUser) {
+          await setDoc(doc(db, "users", uid), { email, displayName });
+        }
+      }
+    );
+};
 
 const signIn = () => {
   signInWithPopup(auth, new GoogleAuthProvider()).then(async (result) => {
     const isNewUser = getAdditionalUserInfo(result)?.isNewUser;
-    const {email,displayName,uid}= result.user;
+    const { email, displayName, uid } = result.user;
 
-    if (isNewUser){
-      await setDoc(doc(db, "users", uid),{email,displayName});
+    if (isNewUser) {
+      await setDoc(doc(db, "users", uid), { email, displayName });
     }
-    navigateTo("/");
-
   });
 };
 
+// Redirect the user if hi is authenticated
+watchEffect(() => {
+  console.log(isAuthenticated.value);
+
+  // redirect if authenticated
+  if (isAuthenticated.value) {
+    navigateTo("/");
+  }
+});
 const fields = [
   {
     name: "email",
@@ -78,7 +103,6 @@ function onSubmit(data: any) {
 }
 </script>
 
-
 <template>
   <UCard class="max-w-sm w-full bg-white/75 dark:bg-white/5 backdrop-blur">
     <!-- Header -->
@@ -99,11 +123,7 @@ function onSubmit(data: any) {
     </div>
     <!-- Content -->
     <div class="flex flex-col gap-y-6">
-      <UForm
-        :state="state"
-        class="space-y-6"
-        @submit="onSubmit"
-      >
+      <UForm :state="state" class="space-y-6" @submit="onSubmit">
         <UFormGroup label="Email" name="email">
           <UInput v-model="state.email" placeholder="Enter Your Email" />
         </UFormGroup>
