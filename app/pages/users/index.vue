@@ -76,6 +76,11 @@ const users = useFirestore(collection(db, "users"));
 
 const isNewUserModalOpen = ref(false);
 const columns = [
+  
+  {
+    key: "actions",
+    label: "Actions",
+  },
   {
     key: "id",
     label: "#",
@@ -88,11 +93,6 @@ const columns = [
     key: "displayName",
     label: "Name",
   },
-
-  {
-    key: "BirthDate",
-    label: "Birth Date",
-  },
   {
     key: "role",
     label: "Role",
@@ -101,9 +101,10 @@ const columns = [
     key: "phoneNumber",
     label: "Phone Number",
   },
+
   {
-    key: "photoURL",
-    label: "Photo",
+    key: "BirthDate",
+    label: "Birth Date",
   },
   {
     key: "createdAt",
@@ -113,10 +114,12 @@ const columns = [
     key: "updatedAt",
     label: "Updated At",
   },
+  
   {
-    key: "actions",
-    label: "Actions",
+    key: "photoURL",
+    label: "Photo",
   },
+  
 ];
 const items = (row: any) => [
   [
