@@ -5,7 +5,11 @@ const emit = defineEmits(['close'])
 
 const state = reactive({
   name: undefined,
-  email: undefined
+  email: undefined,
+  BirthDate: undefined,
+  Role: undefined,
+  PhoneNumber: undefined,
+  Photo: undefined
 })
 
 // https://ui.nuxt.com/components/form
@@ -13,6 +17,9 @@ const validate = (state: any): FormError[] => {
   const errors = []
   if (!state.name) errors.push({ path: 'name', message: 'Please enter a name.' })
   if (!state.email) errors.push({ path: 'email', message: 'Please enter an email.' })
+  if (!state.BirthDate) errors.push({ path: 'BirthDate', message: 'Please enter the Birth Date.' })
+  if (!state.Role) errors.push({ path: 'Role', message: 'Please enter the Role.' })
+  if (!state.PhoneNumber) errors.push({ path: 'PhoneNumber', message: 'Please enter the PhoneNumber.' })
   return errors
 }
 
@@ -56,11 +63,11 @@ async function onSubmit(event: FormSubmitEvent<any>) {
     </UFormGroup>
 
     <UFormGroup
-      label="Birth Date"
+      label="BirthDate"
       name="Birth Date"
     >
       <UInput
-        v-model="state.name"
+        v-model="state.BirthDate"
         placeholder="30 May 1990"
         autofocus
       />
@@ -72,18 +79,18 @@ async function onSubmit(event: FormSubmitEvent<any>) {
       name="Role"
     >
       <UInput
-        v-model="state.name"
+        v-model="state.Role"
         placeholder=¨Professor¨
         autofocus
       />
       
     </UFormGroup>
     <UFormGroup
-      label="Phone Number"
+      label="PhoneNumber"
       name="Phone Number"
     >
       <UInput
-        v-model="state.name"
+        v-model="state.PhoneNumber"
         placeholder=97564534
         autofocus
       />
@@ -94,7 +101,7 @@ async function onSubmit(event: FormSubmitEvent<any>) {
       name="Photo"
     >
       <UInput
-        v-model="state.name"
+        v-model="state.Photo"
         placeholder=97564534
         autofocus
       />
