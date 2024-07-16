@@ -128,20 +128,7 @@ const items = (row: any) => [
       icon: "i-heroicons-pencil-square-20-solid",
       click: async () => await navigateTo("/users/" + row.id),
     },
-    {
-      label: "Duplicate",
-      icon: "i-heroicons-document-duplicate-20-solid",
-    },
-  ],
-  [
-    {
-      label: "Archive",
-      icon: "i-heroicons-archive-box-20-solid",
-    },
-    {
-      label: "Move",
-      icon: "i-heroicons-arrow-right-circle-20-solid",
-    },
+  
   ],
   [
     {
