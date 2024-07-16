@@ -1,6 +1,9 @@
 <script setup lang="ts">
 import type { FormError, FormSubmitEvent } from "#ui/types";
 import { ref } from "vue";
+import { doc, setDoc } from "firebase/firestore";
+
+const { auth, db } = useFirebase();
 
 const props = defineProps({
   row: {
@@ -41,8 +44,9 @@ const validate = (state: any): FormError[] => {
 
 async function onSubmit(event: FormSubmitEvent<any>) {
   // Do something with data
-  console.log(state);
+  console.log("value of state",state.value);
 
+  await setDoc(doc(db, "users", props.row.id), { ...state.value });
   emit("close");
 }
 </script>
