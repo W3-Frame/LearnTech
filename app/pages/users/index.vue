@@ -42,6 +42,38 @@
           </div>
         </div>
       </UModal>
+
+      <UModal v-model="editUserModalOpen">
+        <div class="">
+          <div
+            class="flex items-start justify-between gap-x-1.5 flex-shrink-0 min-h-[--header-height] px-4 py-4 sm:px-6 pb-0"
+          >
+            <div class="flex items-start gap-4">
+              <!---->
+              <div>
+                <p class="text-gray-900 dark:text-white font-semibold">
+                  Update user
+                </p>
+              </div>
+            </div>
+            <UButton
+              icon="i-heroicons-x-mark"
+              color="gray"
+              variant="ghost"
+              @click="
+                () => {
+                  isNewUserModalOpen = false;
+                }
+              "
+            >
+            </UButton>
+          </div>
+          <div class="px-4 py-4 sm:px-6">
+            <UsersForm @close="isNewUserModalOpen = false" />
+          </div>
+        </div>
+      </UModal>
+      
       <UTable :loading="!users" :columns="columns" :rows="users">
         <template #id-data="{ row, index }">
           <pre>{{ index }}</pre>
@@ -75,6 +107,7 @@ const { db } = useFirebase();
 const users = useFirestore(collection(db, "users"));
 
 const isNewUserModalOpen = ref(false);
+const editUserModalOpen = ref(false);
 const columns = [
   
   {
@@ -126,7 +159,9 @@ const items = (row: any) => [
     {
       label: "Edit",
       icon: "i-heroicons-pencil-square-20-solid",
-      click: async () => await navigateTo("/users/" + row.id),
+      click: () => {
+      editUserModalOpen.value = true;
+    },
     },
   
   ],
