@@ -69,11 +69,15 @@
             </UButton>
           </div>
           <div class="px-4 py-4 sm:px-6">
-            <UpdateUsersForm  @close="isNewUserModalOpen = false"/>
+            <UpdateUsersForm
+              v-if="userToEditIndex"
+              @close="isNewUserModalOpen = false"
+              :row="users.find((user) => user.id === userToEditIndex)"
+            />
           </div>
         </div>
       </UModal>
-      
+
       <UTable :loading="!users" :columns="columns" :rows="users">
         <template #id-data="{ row, index }">
           <pre>{{ index }}</pre>
@@ -109,8 +113,8 @@ const users = useFirestore(collection(db, "users"));
 
 const isNewUserModalOpen = ref(false);
 const editUserModalOpen = ref(false);
+const userToEditIndex = ref(null);
 const columns = [
-  
   {
     key: "actions",
     label: "Actions",
@@ -148,12 +152,11 @@ const columns = [
     key: "updatedAt",
     label: "Updated At",
   },
-  
+
   {
     key: "photoURL",
     label: "Photo",
   },
-  
 ];
 const items = (row: any) => [
   [
@@ -161,11 +164,12 @@ const items = (row: any) => [
       label: "Edit",
       icon: "i-heroicons-pencil-square-20-solid",
       click: () => {
-      editUserModalOpen.value = true;
-      
+        console.log("Row Id", row.id);
+        
+        editUserModalOpen.value = true;
+        userToEditIndex.value = row.id;
+      },
     },
-    },
-  
   ],
   [
     {
