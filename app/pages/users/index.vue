@@ -62,14 +62,14 @@
               variant="ghost"
               @click="
                 () => {
-                  isNewUserModalOpen = false;
+                  editUserModalOpen = false;
                 }
               "
             >
             </UButton>
           </div>
           <div class="px-4 py-4 sm:px-6">
-            <UsersForm @close="isNewUserModalOpen = false" />
+            <UpdateUsersForm  @close="isNewUserModalOpen = false"/>
           </div>
         </div>
       </UModal>
@@ -95,6 +95,7 @@
 <script setup lang="ts">
 import { useFirestore } from "@vueuse/firebase/useFirestore";
 import { collection } from "firebase/firestore";
+import UpdateUsersForm from "~/components/users/UpdateUsersForm.vue";
 
 definePageMeta({
   layout: "dashboard",
@@ -161,6 +162,7 @@ const items = (row: any) => [
       icon: "i-heroicons-pencil-square-20-solid",
       click: () => {
       editUserModalOpen.value = true;
+      
     },
     },
   
