@@ -2,18 +2,12 @@
   <div>
     <div>
       <h1>Users</h1>
-      <UButton
-        label="New user"
-        trailing-icon="i-heroicons-plus"
-        color="gray"
-        @click="isNewUserModalOpen = true"
-      />
+      <UButton label="New user" trailing-icon="i-heroicons-plus" color="gray" @click="isNewUserModalOpen = true" />
 
       <UModal v-model="isNewUserModalOpen">
         <div class="">
           <div
-            class="flex items-start justify-between gap-x-1.5 flex-shrink-0 min-h-[--header-height] px-4 py-4 sm:px-6 pb-0"
-          >
+            class="flex items-start justify-between gap-x-1.5 flex-shrink-0 min-h-[--header-height] px-4 py-4 sm:px-6 pb-0">
             <div class="flex items-start gap-4">
               <!---->
               <div>
@@ -25,16 +19,10 @@
                 </p>
               </div>
             </div>
-            <UButton
-              icon="i-heroicons-x-mark"
-              color="gray"
-              variant="ghost"
-              @click="
-                () => {
-                  isNewUserModalOpen = false;
-                }
-              "
-            >
+            <UButton icon="i-heroicons-x-mark" color="gray" variant="ghost" @click="() => {
+                isNewUserModalOpen = false;
+              }
+              ">
             </UButton>
           </div>
           <div class="px-4 py-4 sm:px-6">
@@ -46,8 +34,7 @@
       <UModal v-model="editUserModalOpen">
         <div class="">
           <div
-            class="flex items-start justify-between gap-x-1.5 flex-shrink-0 min-h-[--header-height] px-4 py-4 sm:px-6 pb-0"
-          >
+            class="flex items-start justify-between gap-x-1.5 flex-shrink-0 min-h-[--header-height] px-4 py-4 sm:px-6 pb-0">
             <div class="flex items-start gap-4">
               <!---->
               <div>
@@ -56,24 +43,15 @@
                 </p>
               </div>
             </div>
-            <UButton
-              icon="i-heroicons-x-mark"
-              color="gray"
-              variant="ghost"
-              @click="
-                () => {
-                  editUserModalOpen = false;
-                }
-              "
-            >
+            <UButton icon="i-heroicons-x-mark" color="gray" variant="ghost" @click="() => {
+                editUserModalOpen = false;
+              }
+              ">
             </UButton>
           </div>
           <div class="px-4 py-4 sm:px-6">
-            <UpdateUsersForm
-              v-if="userToEditIndex"
-              @close="isNewUserModalOpen = false"
-              :row="users.find((user) => user.id === userToEditIndex)"
-            />
+            <UpdateUsersForm v-if="activedRow "
+              :row="activedRow" />
           </div>
         </div>
       </UModal>
@@ -84,11 +62,7 @@
         </template>
         <template #actions-data="{ row }">
           <UDropdown :items="items(row)">
-            <UButton
-              color="gray"
-              variant="ghost"
-              icon="i-heroicons-ellipsis-horizontal-20-solid"
-            />
+            <UButton color="gray" variant="ghost" icon="i-heroicons-ellipsis-horizontal-20-solid" />
           </UDropdown>
         </template>
       </UTable>
@@ -110,6 +84,11 @@ useSeoMeta({
 
 const { db } = useFirebase();
 const users = useFirestore(collection(db, "users"));
+
+const activedRow = computed(() => {
+  return users.value?.find((user) => user.id === userToEditIndex.value);
+
+})
 
 const isNewUserModalOpen = ref(false);
 const editUserModalOpen = ref(false);
@@ -141,7 +120,7 @@ const columns = [
   },
 
   {
-    key: "BirthDate",
+    key: "birthDate",
     label: "Birth Date",
   },
   {
@@ -165,7 +144,7 @@ const items = (row: any) => [
       icon: "i-heroicons-pencil-square-20-solid",
       click: () => {
         console.log("Row Id", row.id);
-        
+
         editUserModalOpen.value = true;
         userToEditIndex.value = row.id;
       },
