@@ -15,10 +15,10 @@ const props = defineProps({
 const state = ref({
   name: props.row.displayName,
   email: props.row.email,
-  BirthDate: undefined,
-  Role: props.row.Role,
-  PhoneNumber: props.row.PhoneNumber,
-  Photo: props.row.Photo,
+  birthDate: undefined,
+  role: props.row.Role,
+  phoneNumber: props.row.PhoneNumber,
+  photoURL: props.row.Photo,
 });
 
 const emit = defineEmits(["close"]);
@@ -31,18 +31,18 @@ const validate = (state: any): FormError[] => {
   if (!state.email)
     errors.push({ path: "email", message: "Please enter an email." });
   if (!state.BirthDate)
-    errors.push({ path: "BirthDate", message: "Please enter the Birth Date." });
+    errors.push({ path: "birthDate", message: "Please enter the Birth Date." });
   if (!state.Role)
-    errors.push({ path: "Role", message: "Please enter the Role." });
+    errors.push({ path: "role", message: "Please enter the Role." });
   if (!state.PhoneNumber)
     errors.push({
-      path: "PhoneNumber",
+      path: "phoneNumber",
       message: "Please enter the PhoneNumber.",
     });
   return errors;
 };
 
-async function onSubmit(event: FormSubmitEvent<any>) {
+async function onSubmit() {
   // Do something with data
   console.log("value of state",state.value);
 
@@ -57,7 +57,6 @@ async function onSubmit(event: FormSubmitEvent<any>) {
     :validate-on="['submit']"
     :state="state"
     class="space-y-4"
-    @submit="onSubmit()"
   >
     <UFormGroup label="Name" name="name">
       <UInput v-model="state.name" placeholder="John Doe" autofocus />
@@ -73,7 +72,7 @@ async function onSubmit(event: FormSubmitEvent<any>) {
 
     <UFormGroup label="BirthDate" name="Birth Date">
       <UInput
-        v-model="state.BirthDate"
+        v-model="state.birthDate"
         type="date"
         placeholder="30 May 1990"
         autofocus
@@ -81,13 +80,13 @@ async function onSubmit(event: FormSubmitEvent<any>) {
     </UFormGroup>
 
     <UFormGroup label="Role" name="Role">
-      <UInput v-model="state.Role" placeholder="¨Professor¨" autofocus />
+      <UInput v-model="state.role" placeholder="¨Professor¨" autofocus />
     </UFormGroup>
     <UFormGroup label="PhoneNumber" name="Phone Number">
-      <UInput v-model="state.PhoneNumber" placeholder="97564534" autofocus />
+      <UInput v-model="state.phoneNumber" placeholder="97564534" autofocus />
     </UFormGroup>
     <UFormGroup label="Photo" name="Photo">
-      <UInput v-model="state.Photo" placeholder="97564534" autofocus />
+      <UInput v-model="state.photoURL" placeholder="97564534" autofocus />
     </UFormGroup>
 
     <div class="flex justify-end gap-3">

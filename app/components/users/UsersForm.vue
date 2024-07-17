@@ -6,10 +6,10 @@ const emit = defineEmits(['close'])
 const state = reactive({
   name: undefined,
   email: undefined,
-  BirthDate: undefined,
-  Role: undefined,
-  PhoneNumber: undefined,
-  Photo: undefined
+  birthDate: undefined,
+  role: undefined,
+  phoneNumber: undefined,
+  photoURL: undefined
 })
 
 // https://ui.nuxt.com/components/form
@@ -17,16 +17,14 @@ const validate = (state: any): FormError[] => {
   const errors = []
   if (!state.name) errors.push({ path: 'name', message: 'Please enter a name.' })
   if (!state.email) errors.push({ path: 'email', message: 'Please enter an email.' })
-  if (!state.BirthDate) errors.push({ path: 'BirthDate', message: 'Please enter the Birth Date.' })
-  if (!state.Role) errors.push({ path: 'Role', message: 'Please enter the Role.' })
-  if (!state.PhoneNumber) errors.push({ path: 'PhoneNumber', message: 'Please enter the PhoneNumber.' })
+  if (!state.birthDate) errors.push({ path: 'birthDate', message: 'Please enter the Birth Date.' })
+  if (!state.role) errors.push({ path: 'role', message: 'Please enter the Role.' })
+  if (!state.phoneNumber) errors.push({ path: 'phoneNumber', message: 'Please enter the PhoneNumber.' })
   return errors
 }
 
-async function onSubmit(event: FormSubmitEvent<any>) {
+async function onSubmit() {
   // Do something with data
-  console.log(event.data)
-
   emit('close')
 }
 </script>
@@ -64,10 +62,10 @@ async function onSubmit(event: FormSubmitEvent<any>) {
 
     <UFormGroup
       label="BirthDate"
-      name="Birth Date"
+      name="birthDate"
     >
       <UInput
-        v-model="state.BirthDate"
+        v-model="state.birthDate"
         placeholder="30 May 1990"
         autofocus
       />
@@ -76,10 +74,10 @@ async function onSubmit(event: FormSubmitEvent<any>) {
 
     <UFormGroup
       label="Role"
-      name="Role"
+      name="role"
     >
       <UInput
-        v-model="state.Role"
+        v-model="state.role"
         placeholder=¨Professor¨
         autofocus
       />
@@ -87,10 +85,10 @@ async function onSubmit(event: FormSubmitEvent<any>) {
     </UFormGroup>
     <UFormGroup
       label="PhoneNumber"
-      name="Phone Number"
+      name="phoneNumber"
     >
       <UInput
-        v-model="state.PhoneNumber"
+        v-model="state.phoneNumber"
         placeholder=97564534
         autofocus
       />
@@ -101,7 +99,7 @@ async function onSubmit(event: FormSubmitEvent<any>) {
       name="Photo"
     >
       <UInput
-        v-model="state.Photo"
+        v-model="state.photoURL"
         placeholder=97564534
         autofocus
       />
