@@ -11,6 +11,7 @@ interface Props {
 }
 const props = defineProps<Props>();
 
+// Copy the props value to be edited
 const state: Ref<Partial<User>> = ref({
   firstName: props.row.firstName,
   lastName: props.row.lastName,
@@ -45,7 +46,11 @@ const validate = (state: any): FormError[] => {
 };
 
 async function onSubmit() {
-  await setDoc(doc(db, "users", props.row.id), { ...state.value, displayName: `${state.value.firstName} ${state.value.lastName}` });
+  await setDoc(doc(db, "users", props.row.id), {
+    ...state.value,
+    displayName: `${state.value.firstName} ${state.value.lastName}`,
+    updatedAt: new Date().toDateString(),
+  });
   emit("close");
 }
 </script>
