@@ -52,9 +52,6 @@ async function onSubmit() {
             displayName: `${state.firstName} ${state.lastName}`,
             updatedAt: new Date().toDateString(),
             createddAt: new Date().toDateString(),
-            birthDate:'${state.birthDate}',
-            role:'${state.role}',
-            phoneNumber:'${state.phoneNumber}',
           });
         }
       }
