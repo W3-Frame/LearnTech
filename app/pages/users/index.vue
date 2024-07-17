@@ -100,6 +100,7 @@
 import { useFirestore } from "@vueuse/firebase/useFirestore";
 import { collection } from "firebase/firestore";
 import UpdateUsersForm from "~/components/users/UpdateUsersForm.vue";
+import type { User } from "~/type/model";
 
 definePageMeta({
   layout: "dashboard",
@@ -109,9 +110,10 @@ useSeoMeta({
 });
 
 const { db } = useFirebase();
-const users = useFirestore(collection(db, "users"));
 
-const activedRow = computed(() => {
+const users = useFirestore(collection(db, "users")) as Ref<User[] | undefined>;
+
+const activedRow: ComputedRef<User | undefined> = computed(() => {
   return users.value?.find((user) => user.id === userToEditIndex.value);
 });
 
