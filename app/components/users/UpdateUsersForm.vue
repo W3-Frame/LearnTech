@@ -46,10 +46,11 @@ const validate = (state: any): FormError[] => {
 };
 
 async function onSubmit() {
-  // Do something with data
-  console.log("value of state",state.value);
-
-  await setDoc(doc(db, "users", props.row.id), { ...state.value });
+  await setDoc(doc(db, "users", props.row.id), {
+    ...state.value,
+    displayName: `${state.value.firstName} ${state.value.lastName}`,
+    updatedAt: new Date().toDateString(),
+  });
   emit("close");
 }
 </script>
@@ -61,15 +62,22 @@ async function onSubmit() {
     :state="state"
     class="space-y-4"
   >
-    <UFormGroup label="Name" name="name">
-      <UInput v-model="state.name" placeholder="John Doe" autofocus />
+    <UFormGroup label="Last Name" name="lastName">
+      <UInput v-model="state.lastName" placeholder="Doe" autofocus />
+    </UFormGroup>
+    <UFormGroup label="First Name" name="firstName">
+      <UInput v-model="state.firstName" placeholder="John" autofocus />
     </UFormGroup>
 
     <UFormGroup label="Email" name="email">
-      <UInput v-model="state.email" type="email" placeholder="john.doe@example.com" />
+      <UInput
+        v-model="state.email"
+        type="email"
+        placeholder="john.doe@example.com"
+      />
     </UFormGroup>
 
-    <UFormGroup label="BirthDate" name="Birth Date">
+    <UFormGroup label="BirthDate" name="birthDate">
       <UInput
         v-model="state.birthDate"
         type="date"
@@ -89,7 +97,12 @@ async function onSubmit() {
     </UFormGroup>
 
     <div class="flex justify-end gap-3">
-      <UButton label="Cancel" color="gray" variant="ghost" @click="emit('close')" />
+      <UButton
+        label="Cancel"
+        color="gray"
+        variant="ghost"
+        @click="emit('close')"
+      />
       <UButton type="submit" label="Save" color="black" @click="onSubmit()" />
     </div>
   </UForm>
