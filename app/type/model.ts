@@ -1,14 +1,15 @@
 export interface User {
-  id: number;
+  id: string;
   firstName: string;
   lastName: string;
-  role: string; // {"admin", "user"} // ['ROLE_ADMIN', 'ROLE_USER']
+  displayName?: string;
+  role: string;
   email: string;
   birthDate?: Date;
   createdAt: Date;
   updatedAt: Date;
   lastLogin: Date;
-  phone?: string;
+  phoneNumber?: string;
   photoURL?: string;
 }
 interface useDate {

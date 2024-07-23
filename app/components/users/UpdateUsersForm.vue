@@ -2,23 +2,24 @@
 import type { FormError, FormSubmitEvent } from "#ui/types";
 import { ref } from "vue";
 import { doc, setDoc } from "firebase/firestore";
+import type { User } from "~/type/model";
 
 const { db } = useFirebase();
 
-const props = defineProps({
-  row: {
-    type: Object,
-    required: true,
-  },
-});
+interface Props {
+  row: User;
+}
+const props = defineProps<Props>();
 
-const state = ref({
-  name: props.row.displayName,
+// Copy the props value to be edited
+const state: Ref<Partial<User>> = ref({
+  firstName: props.row.firstName,
+  lastName: props.row.lastName,
   email: props.row.email,
-  birthDate: undefined,
-  role: props.row.Role,
-  phoneNumber: props.row.PhoneNumber,
-  photoURL: props.row.Photo,
+  birthDate: props.row.birthDate,
+  role: props.row.role,
+  phoneNumber: props.row.phoneNumber,
+  photoURL: props.row.photoURL,
 });
 
 const emit = defineEmits(["close"]);
@@ -26,15 +27,17 @@ const emit = defineEmits(["close"]);
 // https://ui.nuxt.com/components/form
 const validate = (state: any): FormError[] => {
   const errors = [];
-  if (!state.name)
-    errors.push({ path: "name", message: "Please enter a name." });
+  if (!state.firstName)
+    errors.push({ path: "firstName", message: "Please enter a firstName." });
+  if (!state.lastName)
+    errors.push({ path: "lastName", message: "Please enter a lastName." });
   if (!state.email)
     errors.push({ path: "email", message: "Please enter an email." });
-  if (!state.BirthDate)
+  if (!state.birthDate)
     errors.push({ path: "birthDate", message: "Please enter the Birth Date." });
-  if (!state.Role)
+  if (!state.role)
     errors.push({ path: "role", message: "Please enter the Role." });
-  if (!state.PhoneNumber)
+  if (!state.phoneNumber)
     errors.push({
       path: "phoneNumber",
       message: "Please enter the PhoneNumber.",
@@ -44,7 +47,7 @@ const validate = (state: any): FormError[] => {
 
 async function onSubmit() {
   // Do something with data
-  console.log("value of state", state.value);
+  console.log("value of state",state.value);
 
   await setDoc(doc(db, "users", props.row.id), { ...state.value });
   emit("close");
@@ -52,7 +55,12 @@ async function onSubmit() {
 </script>
 
 <template>
-  <UForm :validate="validate" :validate-on="['submit']" :state="state" class="space-y-4">
+  <UForm
+    :validate="validate"
+    :validate-on="['submit']"
+    :state="state"
+    class="space-y-4"
+  >
     <UFormGroup label="Name" name="name">
       <UInput v-model="state.name" placeholder="John Doe" autofocus />
     </UFormGroup>
@@ -62,16 +70,21 @@ async function onSubmit() {
     </UFormGroup>
 
     <UFormGroup label="BirthDate" name="Birth Date">
-      <UInput v-model="state.birthDate" type="date" placeholder="30 May 1990" autofocus />
+      <UInput
+        v-model="state.birthDate"
+        type="date"
+        placeholder="30 May 1990"
+        autofocus
+      />
     </UFormGroup>
 
-    <UFormGroup label="Role" name="Role">
+    <UFormGroup label="Role" name="role">
       <UInput v-model="state.role" placeholder="¨Professor¨" autofocus />
     </UFormGroup>
-    <UFormGroup label="PhoneNumber" name="Phone Number">
+    <UFormGroup label="Phone Number" name="phoneNumber">
       <UInput v-model="state.phoneNumber" placeholder="97564534" autofocus />
     </UFormGroup>
-    <UFormGroup label="Photo" name="Photo">
+    <UFormGroup label="Photo" name="photoURL">
       <UInput v-model="state.photoURL" placeholder="97564534" autofocus />
     </UFormGroup>
 
