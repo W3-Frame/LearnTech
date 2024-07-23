@@ -16,11 +16,11 @@ const links = [{
 }, {
   label: 'Users',
   icon: 'i-heroicons-users',
-  to: '/users'
+  to: '/administration/users'
 }, {
   label: 'Lessons',
   icon: 'i-heroicons-book-open',
-  to: '/lessons'
+  to: '/administration/lessons'
 }]
 </script>
 
