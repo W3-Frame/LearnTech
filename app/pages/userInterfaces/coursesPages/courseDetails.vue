@@ -15,7 +15,9 @@
         <div v-if="selectedItem.type === 'evaluation'" class="evaluation-card">
           <h2>{{ selectedItem.name }}</h2>
           <p>Ouvert : {{ selectedItem.lastOpened || 'N/A' }}</p>
-          <button @click="startEvaluation">{{ selectedItem.lastOpened ? 'Effectuer de nouveau le test' : 'Effectuer le test' }}</button>
+          <button @click="startEvaluation(selectedItem.id)">
+          {{ selectedItem.lastOpened ? 'Effectuer de nouveau le test' : 'Effectuer le test' }}
+        </button>
           <p>Nombre de tentatives autorisées : {{ selectedItem.attemptsAllowed }}</p>
           <p>Méthode d'évaluation : Note la plus haute</p>
           <h3>Résumé des tentatives</h3>
@@ -57,8 +59,13 @@
   </template>
   
   <script>
-  import Sidebar from '~/components/Sidebar.vue';
-  
+  definePageMeta({
+  layout: "userboard",
+});
+
+useSeoMeta({
+  title: "details du cours",
+});
   export default {
     components: {
       Sidebar
@@ -90,9 +97,9 @@
       nextChapter() {
         // Logique pour passer au chapitre suivant
       },
-      startEvaluation() {
-        // Logique pour démarrer l'évaluation
-      },
+      startEvaluation(evaluationId) {
+      this.$router.push(`/userInterfaces/coursesPages/evaluation/${evaluationId}`);
+    },
       sendMessage() {
         if (this.userMessage.trim() === '') return;
   
