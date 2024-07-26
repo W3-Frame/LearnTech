@@ -27,6 +27,13 @@
 </template>
 
 <script setup>
+ definePageMeta({
+  layout: "userboard",
+});
+
+useSeoMeta({
+  title: "details des notes",
+});
 import { ref, onMounted } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 
@@ -54,53 +61,53 @@ const goBack = () => {
 };
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .grade-details {
   padding: 20px;
-}
 
-h1 {
-  font-size: 2em;
-  font-weight: bold;
-  margin-bottom: 10px;
-}
+  h1 {
+    font-size: 2em;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
 
-h2 {
-  font-size: 1.5em;
-  margin-bottom: 20px;
-}
+  h2 {
+    font-size: 1.5em;
+    margin-bottom: 20px;
+  }
 
-.details-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-bottom: 20px;
-}
+  .details-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
 
-.details-table th, .details-table td {
-  border: 1px solid #ddd;
-  padding: 8px;
-  text-align: left;
-}
+    th, td {
+      border: 1px solid #ddd;
+      padding: 8px;
+      text-align: left;
+    }
 
-.details-table th {
-  background-color: #f2f2f2;
-  font-weight: bold;
-}
+    th {
+      background-color: #f2f2f2;
+      font-weight: bold;
+    }
 
-.details-table td {
-  font-size: 1em;
-}
+    td {
+      font-size: 1em;
+    }
+  }
 
-button {
-  padding: 10px 20px;
-  background-color: #007bff;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-}
+  button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
 
-button:hover {
-  background-color: #0056b3;
+    &:hover {
+      background-color: #0056b3;
+    }
+  }
 }
 </style>
