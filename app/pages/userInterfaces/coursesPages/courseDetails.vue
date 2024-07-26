@@ -130,7 +130,7 @@ useSeoMeta({
   };
   </script>
   
-  <style scoped>
+  <style lang="scss" scoped>
   .course-details {
     display: flex;
     flex-direction: row;

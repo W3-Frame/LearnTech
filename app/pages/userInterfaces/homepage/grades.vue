@@ -58,35 +58,37 @@ const goToGradeDetails = (courseId, courseName) => {
 <style lang="scss" scoped>
 .grades {
   padding: 20px;
-}
 
-h1 {
-  font-size: 2em;
-  font-weight: bold;
-  margin-bottom: 20px;
-}
+  h1 {
+    font-size: 2em;
+    font-weight: bold;
+    margin-bottom: 20px;
+  }
 
-.grades-table {
-  width: 100%;
-  border-collapse: collapse;
-}
+  .grades-table {
+    width: 100%;
+    border-collapse: collapse;
 
-.grades-table th, .grades-table td {
-  border: 1px solid #ddd;
-  padding: 8px;
-  text-align: left;
-}
+    th, td {
+      border: 1px solid #ddd;
+      padding: 8px;
+      text-align: left;
+    }
 
-.grades-table th {
-  background-color: #f2f2f2;
-  font-weight: bold;
-}
+    th {
+      background-color: #f2f2f2;
+      font-weight: bold;
+    }
 
-.grades-table tr:hover {
-  background-color: #f5f5f5;
-  cursor: pointer;
+    tr:hover {
+      background-color: #f5f5f5;
+      cursor: pointer;
+    }
+  }
 }
 </style>
+
+
 
 
  
