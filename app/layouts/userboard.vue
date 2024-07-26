@@ -12,8 +12,8 @@
             <i class="fas fa-user-circle"></i>
           </div>
           <div v-if="dropdownOpen" class="dropdown-menu">
-            <NuxtLink to="/profile">Profil</NuxtLink>
-            <NuxtLink to="/grades">Notes</NuxtLink>
+            <NuxtLink to="/userInterfaces/profile/profil">Profil</NuxtLink>
+            <NuxtLink to="/userInterfaces/homepage/grades">Notes</NuxtLink>
             <div class="divider"></div>
             <a @click="confirmLogout">Déconnexion</a>
           </div>
