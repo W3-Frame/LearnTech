@@ -98,7 +98,7 @@ useSeoMeta({
         // Logique pour passer au chapitre suivant
       },
       startEvaluation(evaluationId) {
-      this.$router.push(`/userInterfaces/coursesPages/evaluation/${evaluationId}`);
+      this.$router.push(`/userInterfaces/evaluationPages/evaluation/${evaluationId}`);
     },
       sendMessage() {
         if (this.userMessage.trim() === '') return;
