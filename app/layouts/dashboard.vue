@@ -15,7 +15,7 @@ watch(isAuthenticated, () => {
   if (!isAuthenticated.value) {
     navigateTo("/login");
   }
-});
+}, {immediate: true});
 </script>
 
 <template>
