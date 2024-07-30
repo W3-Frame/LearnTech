@@ -58,7 +58,7 @@
     </div>
   </template>
   
-  <script>
+  <script >
   definePageMeta({
   layout: "userboard",
 });
